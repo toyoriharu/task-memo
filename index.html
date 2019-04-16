@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="jp">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>TaskMemo</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/siimple@3.2.0/dist/siimple.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="bg-image">
+    <div id="app">
+      <h4 class="siimple-h4">タスクメモ</h4>
+      <form @submit.prevent="action">
+        <div class="siimple-form">
+          <label class="siimple-label">Text</label>
+          <div class="input-group">
+            <!-- input -->
+            <input type="text" v-model="title" class="siimple-input" placeholder="区分1"> <input type="text" v-model="subtitle"
+              class="siimple-input" placeholder="区分2">
+            <br>
+            <br>
+            <textarea cols="40" rows="3" v-model="text" class="siimple-textarea" placeholder="残しておきたいテキスト" required
+              autofocus>
+            </textarea>
+          </div>
+
+          <!-- <div class="input-group">
+            <label class="siimple-label">優先度:</label>
+            <div class="siimple-radio">
+              <input type="radio" id="myRadio">
+            </div>
+            <div class="siimple-radio">
+              <input type="radio" id="myRadio">
+            </div>
+            <div class="siimple-radio">
+              <input type="radio" id="myRadio">
+            </div>
+            <div class="siimple-radio">
+              <input type="radio" id="myRadio">
+            </div>
+          </div> -->
+
+
+          <div class="input-group">
+            <!-- input addon button -->
+            <span class="input-addon-btn">
+              <button type="submit" class="siimple-btn siimple-btn--pink">
+                追加
+              </button>
+            </span>
+          </div>
+
+        </div>
+      </form>
+      <div class="siimple-rule"></div>
+      <div class="bg-mask">
+        <div class="siimple-grid">
+          <label class="siimple-label">表示：{{getCount}}件 / 合計：{{getTotalCount}}件</label>
+          <div class="siimple-switch siimple--float-right">
+            <input type="checkbox" id="mySwitch" checked @change="changeList(isShowDone)" v-model="isShowDone">
+            <label for="mySwitch"></label>
+            <div></div>
+          </div>
+          <label class="siimple-label siimple--float-right">完了済みのタスクも表示する:</label>
+          <div>
+            <label class="siimple-label">検索フィルタ：</label><input type="text" v-model="search" class="siimple-input"
+              placeholder="">
+          </div>
+
+          <div class="siimple-grid-row">
+            <transition-group name="scale" tag="p">
+              <div class="siimple-grid-col siimple-grid-col--4" v-for="(item, index) in getDataList" :key="index">
+                <div class="siimple-card">
+                  <div class="siimple-card-body" style="height: 120px;">
+                    <div class="siimple-card-title">{{item.title}}</div>
+                    <div class="siimple-card-subtitle">{{item.subtitle}}</div>
+                    {{item.text}}
+                  </div>
+                  <div class="siimple-card-footer">
+                    <span v-if="item.done">
+                      <button @click="done(item)" class="siimple-btn siimple-btn--orange compact" type="button">取り消し</button>
+                    </span>
+                    <span v-else>
+                      <button @click="done(item)" class="siimple-btn siimple-btn--green compact" type="button">完了</button>
+                    </span>
+                    <button @click="clear(item)" class="siimple-btn siimple-btn--red compact" type="button">削除</button>
+                  </div>
+                </div>
+
+              </div>
+            </transition-group>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+  <script src="node_modules\vue\dist\vue.min.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
