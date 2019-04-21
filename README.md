@@ -7,7 +7,7 @@
 npm install
 ```
 
-##　アプリ起動
+## アプリ起動
 ```
 electron .
 ```
